@@ -20,13 +20,19 @@ module Songkickr
   class Setlist
     attr_accessor :setlist_items, :artist, :playlist_uri, :display_name, :id
 
+    SETLIST_ITEM = 'setlistItem'.freeze
+    ARTIST       = 'artist'.freeze
+    PLAYLIST_URI = 'playlistUri'.freeze
+    DISPLAY_NAME = 'displayName'.freeze
+    ID           = 'id'.freeze
+
     # Takes the setlist hash and parses out an Event and Artist and an array of SetlistItems.
     def initialize(setlist_hash)
-      @setlist_items = parse_setlist_items setlist_hash["setlistItem"]
-      @artist        = Songkickr::Artist.new setlist_hash["artist"]
-      @playlist_uri  = setlist_hash["playlistUri"]
-      @display_name  = setlist_hash["displayName"]
-      @id            = setlist_hash["id"]
+      @setlist_items = parse_setlist_items setlist_hash[SETLIST_ITEM]
+      @artist        = Songkickr::Artist.new setlist_hash[ARTIST]
+      @playlist_uri  = setlist_hash[PLAYLIST_URI]
+      @display_name  = setlist_hash[DISPLAY_NAME]
+      @id            = setlist_hash[ID]
     end
 
     protected

@@ -24,21 +24,27 @@ module Songkickr
   class Location
     attr_accessor :city, :lat, :lng, :metro_area
 
+    CITY         = 'city'.freeze
+    LAT          = 'lat'.freeze
+    LNG          = 'lng'.freeze
+    DISPLAY_NAME = 'displayName'.freeze
+    METRO_AREA   = 'metroArea'.freeze
+
     # Takes a location hash. Handles the different city hashes from Event and Location
     def initialize(location_hash)
-      if location_hash["city"].is_a?(String) # location in Event
-        @city = location_hash["city"]
-        @lat  = location_hash["lat"]
-        @lng  = location_hash["lng"]
-      elsif location_hash["city"].is_a?(Hash) # stand-alone Location
-        city_hash = location_hash["city"]
-        @city = city_hash["displayName"] if city_hash && city_hash["displayName"]
+      if location_hash[CITY].is_a?(String) # location in Event
+        @city = location_hash[CITY]
+        @lat  = location_hash[LAT]
+        @lng  = location_hash[LNG]
+      elsif location_hash[CITY].is_a?(Hash) # stand-alone Location
+        city_hash = location_hash[CITY]
+        @city = city_hash[DISPLAY_NAME] if city_hash && city_hash[DISPLAY_NAME]
         # some locations have a null lng, lat in city hash, but have non-null in metroArea hash
-        @lat  = city_hash["lat"]
-        @lng  = city_hash["lng"]
+        @lat  = city_hash[LAT]
+        @lng  = city_hash[LNG]
       end
 
-      @metro_area = MetroArea.new location_hash['metroArea'] if location_hash.include? 'metroArea'
+      @metro_area = MetroArea.new location_hash[METRO_AREA] if location_hash.include? METRO_AREA
     end
   end
 end

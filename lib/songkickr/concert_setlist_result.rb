@@ -3,10 +3,13 @@ module Songkickr
   #
   # http://www.songkick.com/developer/setlists
   class ConcertSetlistResult < ResultSet
+    TYPE = 'Setlist'.freeze
+    KEY  = 'setlist'.freeze
+
     # Takes the result ash and passes it to parse_results
     def initialize(result_hash = {})
-      @result_type       = "Setlist"
-      @result_key_string = "setlist"
+      @result_type       = TYPE
+      @result_key_string = KEY
 
       super
     end

@@ -20,13 +20,19 @@ module Songkickr
   class Performance
     attr_accessor :artist, :display_name, :id, :billing_index, :billing
 
+    ARTIST        = 'artist'.freeze
+    DISPLAY_NAME  = 'displayName'.freeze
+    ID            = 'id'.freeze
+    BILLING_INDEX = 'billingIndex'.freeze
+    BILLING       = 'billing'.freeze
+
     # Takes a the hash of the performance. Parses out an Artist object for the artist.
     def initialize(performance_hash)
-      @artist        = Songkickr::Artist.new performance_hash["artist"]
-      @display_name  = performance_hash["displayName"]
-      @id            = performance_hash["id"]
-      @billing_index = performance_hash['billingIndex']
-      @billing       = performance_hash['billing']
+      @artist        = Songkickr::Artist.new performance_hash[ARTIST]
+      @display_name  = performance_hash[DISPLAY_NAME]
+      @id            = performance_hash[ID]
+      @billing_index = performance_hash[BILLING_INDEX]
+      @billing       = performance_hash[BILLING]
     end
   end
 end

@@ -2,15 +2,22 @@ module Songkickr
   class ResultSet
     attr_accessor :page, :per_page, :total_entries, :results, :result_type, :result_key_string, :status
 
+    RESULTS_PAGE  = 'resultsPage'.freeze
+    STATUS        = 'status'.freeze
+    PAGE          = 'page'.freeze
+    PER_PAGE      = 'per_page'.freeze
+    TOTAL_ENTRIES = 'totalEntries'.freeze
+    RESULTS       = 'results'.freeze
+
     def initialize(result_hash = {})
-      results_page = result_hash["resultsPage"]
+      results_page = result_hash[RESULTS_PAGE]
 
       if results_page
-        @status        = results_page["status"]                if results_page.include? "status"
-        @page          = results_page["page"]                  if results_page.include? "page"
-        @per_page      = results_page["per_page"]              if results_page.include? "per_page"
-        @total_entries = results_page["totalEntries"]          if results_page.include? "totalEntries"
-        @results       = parse_results results_page["results"] if results_page.include? "results"
+        @status        = results_page[STATUS]                if results_page.include? STATUS
+        @page          = results_page[PAGE]                  if results_page.include? PAGE
+        @per_page      = results_page[PER_PAGE]              if results_page.include? PER_PAGE
+        @total_entries = results_page[TOTAL_ENTRIES]          if results_page.include? TOTAL_ENTRIES
+        @results       = parse_results results_page[RESULTS] if results_page.include? RESULTS
       end
     end
 

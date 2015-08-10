@@ -21,10 +21,13 @@ module Songkickr
   #     },"totalEntries":1,"perPage":50,"page":1,"status":"ok"}}
 
   class VenueResult < ResultSet
+    TYPE = 'Venue'.freeze
+    KEY  = 'venue'.freeze
+
     # Takes the result hash directly and parses out the page and total entries and finally passes off to the parse_results method to get the results.
     def initialize(result_hash = {})
-      @result_type       = "Venue"
-      @result_key_string = "venue"
+      @result_type       = TYPE
+      @result_key_string = KEY
 
       super
     end

@@ -8,11 +8,16 @@ module Songkickr
   class Tracking
     attr_accessor :attendance, :created_at, :id, :username
 
+    ATTENDANCE = 'attendance'.freeze
+    ID         = 'id'.freeze
+    USERNAME   = 'username'.freeze
+    CREATED_AT = 'created_at'.freeze
+
     def initialize(tracking_hash)
-      @attendance = tracking_hash["attendance"] if tracking_hash.include? "attendance"
-      @id         = tracking_hash["id"]
-      @username   = tracking_hash["username"]
-      @created_at = tracking_hash["created_at"]
+      @attendance = tracking_hash[ATTENDANCE] if tracking_hash.include? ATTENDANCE
+      @id         = tracking_hash[ID]
+      @username   = tracking_hash[USERNAME]
+      @created_at = tracking_hash[CREATED_AT]
     end
   end
 end

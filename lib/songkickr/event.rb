@@ -39,26 +39,41 @@ module Songkickr
   class Event
     attr_accessor :popularity, :type, :display_name, :location, :start, :uri, :id, :performances, :status, :venue, :tickets_uri, :series
 
+    POPULARITY   = 'popularity'.freeze
+    TYPE         = 'type'.freeze
+    LOCATION     = 'location'.freeze
+    STATUS       = 'status'.freeze
+    DISPLAY_NAME = 'displayName'.freeze
+    VENUE        = 'venue'.freeze
+    START        = 'start'.freeze
+    URI          = 'uri'.freeze
+    PERFORMANCE  = 'performance'.freeze
+    ID           = 'id'.freeze
+    TICKETS_URI  = 'ticketsUri'.freeze
+    SERIES       = 'series'.freeze
+    DATE         = 'date'.freeze
+    TIME         = 'time'.freeze
+
     def initialize(event_hash)
-      @popularity   = event_hash["popularity"].to_f
-      @type         = event_hash["type"]
-      @location     = Songkickr::Location.new event_hash["location"]
-      @status       = event_hash["status"]
-      @display_name = event_hash["displayName"]
-      @venue        = Songkickr::Venue.new event_hash["venue"]
-      @start        = start_hash_to_datetime event_hash["start"]
-      @uri          = event_hash["uri"]
-      @performances = parse_performance event_hash["performance"]
-      @id           = event_hash["id"]
-      @tickets_uri  = event_hash["ticketsUri"]
-      @series       = event_hash["series"]["displayName"] if event_hash["series"] && event_hash["series"]["displayName"]
+      @popularity   = event_hash[POPULARITY].to_f
+      @type         = event_hash[TYPE]
+      @location     = Songkickr::Location.new event_hash[LOCATION]
+      @status       = event_hash[STATUS]
+      @display_name = event_hash[DISPLAY_NAME]
+      @venue        = Songkickr::Venue.new event_hash[VENUE]
+      @start        = start_hash_to_datetime event_hash[START]
+      @uri          = event_hash[URI]
+      @performances = parse_performance event_hash[PERFORMANCE]
+      @id           = event_hash[ID]
+      @tickets_uri  = event_hash[TICKETS_URI]
+      @series       = event_hash[SERIES][DISPLAY_NAME] if event_hash[SERIES] && event_hash[SERIES][DISPLAY_NAME]
     end
 
     protected
 
       # Takes the start hash and turns in into a DateTime object.
       def start_hash_to_datetime(start_hash)
-        DateTime.parse "#{start_hash["date"]} #{start_hash["time"]}"
+        DateTime.parse "#{start_hash[DATE]} #{start_hash[TIME]}"
       end
 
       # Builds a list of Performance objects.

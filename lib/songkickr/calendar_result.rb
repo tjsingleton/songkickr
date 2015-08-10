@@ -1,8 +1,11 @@
 module Songkickr
   class CalendarResult < ResultSet
+    TYPE = 'CalendarEntry'.freeze
+    KEY  = 'calendarEntry'.freeze
+
     def initialize(result_hash = {})
-      @result_type       = "CalendarEntry"
-      @result_key_string = "calendarEntry"
+      @result_type       = TYPE
+      @result_key_string = KEY
 
       super
     end
