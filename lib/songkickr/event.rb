@@ -37,7 +37,7 @@ module Songkickr
   #
   # http://www.songkick.com/developer/artist-search
   class Event
-    attr_accessor :popularity, :type, :display_name, :location, :start, :uri, :id, :performances, :status, :venue, :tickets_uri, :series
+    attr_accessor :popularity, :type, :display_name, :location, :start, :uri, :id, :performances, :status, :venue, :tickets_uri, :series, :start_time, :start_date, :start_datetime
 
     POPULARITY   = 'popularity'.freeze
     TYPE         = 'type'.freeze
@@ -53,6 +53,7 @@ module Songkickr
     SERIES       = 'series'.freeze
     DATE         = 'date'.freeze
     TIME         = 'time'.freeze
+    DATETIME     = 'datetime'.freeze
 
     def initialize(event_hash)
       @popularity   = event_hash[POPULARITY].to_f
@@ -67,6 +68,12 @@ module Songkickr
       @id           = event_hash[ID]
       @tickets_uri  = event_hash[TICKETS_URI]
       @series       = event_hash[SERIES][DISPLAY_NAME] if event_hash[SERIES] && event_hash[SERIES][DISPLAY_NAME]
+
+      if event_hash[START]
+        @start_datetime = event_hash[START][DATETIME]
+        @start_time     = event_hash[START][TIME]
+        @start_date     = event_hash[START][DATE]
+      end
     end
 
     protected
