@@ -166,6 +166,24 @@ module Songkickr
         result = get("/search/venues.json", :query => query)
         Songkickr::VenueResult.new result
       end
+
+      # All upcoming events
+      # Format JSON
+      # Needs permission (ApiGrant)
+      def all_upcoming
+        result = get("/events/upcoming.gz")
+        Songkickr::EventResult.new(result)
+      end
+
+      # Upcoming events that changed in the last 24 hours
+      # Format JSON
+      # This feed includes deleted events. It will include events that are set as deleted in the database and events that got merged by our moderators. They are represented by having a status="deleted". Deleted events MUST not be displayed by the client application.
+      # We recommend from time to time to do another full import, since this change list is not incremental (events deleted more than a day ago won't be here)
+      # Needs permission (ApiGrant)
+      def recent_upcoming
+        result = get("/events/recent_upcoming.gz")
+        Songkickr::EventResult.new(result)
+      end
     end
   end
 end
