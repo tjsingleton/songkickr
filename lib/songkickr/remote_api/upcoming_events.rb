@@ -171,7 +171,7 @@ module Songkickr
       # Format JSON
       # Needs permission (ApiGrant)
       def all_upcoming
-        result = get("/events/upcoming.gz")
+        result = get("/events/upcoming.gz", format: :gzip)
         Songkickr::EventResult.new(result)
       end
 
@@ -181,7 +181,7 @@ module Songkickr
       # We recommend from time to time to do another full import, since this change list is not incremental (events deleted more than a day ago won't be here)
       # Needs permission (ApiGrant)
       def recent_upcoming
-        result = get("/events/recent_upcoming.gz")
+        result = get("/events/recent_upcoming.gz", format: :gzip)
         Songkickr::EventResult.new(result)
       end
     end

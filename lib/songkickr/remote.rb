@@ -18,6 +18,19 @@ module Songkickr
     base_uri 'api.songkick.com/api/3.0'
     format :json
 
+    class GzippedJsonParser < HTTParty::Parser
+      SupportedFormats.merge!({'application/x-gzip'.freeze => :gzip})
+
+      def gzip
+        gz = Zlib::GzipReader.new(StringIO.new(body))
+        JSON.parse(gz.read)
+      ensure
+        gz.close if gz
+      end
+    end
+
+    parser(GzippedJsonParser)
+
     # ==== Create a new instance of the remote class to talk to Songkick
     # Get an API key for your app from http://developer.songkick.com/
     def initialize(api_key = nil, options = {})
