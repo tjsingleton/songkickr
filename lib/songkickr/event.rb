@@ -54,18 +54,22 @@ module Songkickr
     DATE         = 'date'.freeze
     TIME         = 'time'.freeze
     DATETIME     = 'datetime'.freeze
+    DELETED      = 'deleted'.freeze
 
     def initialize(event_hash)
+      @status       = event_hash[STATUS]
+      @id           = event_hash[ID]
+
+      return if @status == DELETED
+
       @popularity   = event_hash[POPULARITY].to_f
       @type         = event_hash[TYPE]
       @location     = Songkickr::Location.new event_hash[LOCATION]
-      @status       = event_hash[STATUS]
       @display_name = event_hash[DISPLAY_NAME]
       @venue        = Songkickr::Venue.new event_hash[VENUE]
       @start        = start_hash_to_datetime event_hash[START]
       @uri          = event_hash[URI]
       @performances = parse_performance event_hash[PERFORMANCE]
-      @id           = event_hash[ID]
       @tickets_uri  = event_hash[TICKETS_URI]
       @series       = event_hash[SERIES][DISPLAY_NAME] if event_hash[SERIES] && event_hash[SERIES][DISPLAY_NAME]
 
